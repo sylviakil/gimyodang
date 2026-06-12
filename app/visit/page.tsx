@@ -378,12 +378,12 @@ function VisitContent() {
 
   // ── 렌더 ───────────────────────────────────────────────
   return (
-    <div className="relative min-h-screen bg-[#0D0B08] text-[#E5E5E5] font-serif flex flex-col overflow-hidden">
+    <div className="relative min-h-screen bg-transparent text-[#E5E5E5] font-serif flex flex-col overflow-hidden">
       <AtmosphereEffect />
 
       {/* 네비 */}
-      <nav className="fixed top-0 left-0 right-0 z-30 flex justify-between items-center px-6 md:px-12 h-16 bg-[#0D0B08]/80 backdrop-blur-sm border-b border-white/5">
-        <Link href="/" className="flex items-center gap-3 hover:opacity-80 transition-all">
+      <nav className="fixed top-0 left-0 right-0 z-30 flex justify-between items-center px-6 md:px-12 h-16 bg-transparent">
+        <Link href="/?intro=1" className="flex items-center gap-3 hover:opacity-80 transition-all">
           <div className="w-7 h-7 bg-[#C9A84C] rotate-45 flex items-center justify-center">
             <div className="w-3.5 h-3.5 bg-black rotate-[-45deg] flex items-center justify-center font-serif text-[8px] text-[#C9A84C] font-bold">奇</div>
           </div>
@@ -583,7 +583,7 @@ function VisitContent() {
 
 export default function VisitPage() {
   return (
-    <Suspense fallback={<div className="min-h-screen bg-[#0D0B08] flex items-center justify-center text-[#C9A84C] font-serif">기묘당을 여는 중...</div>}>
+    <Suspense fallback={<div className="min-h-screen bg-transparent flex items-center justify-center text-[#C9A84C] font-serif">기묘당을 여는 중...</div>}>
       <VisitContent />
     </Suspense>
   );

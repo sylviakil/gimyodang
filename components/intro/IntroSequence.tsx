@@ -52,9 +52,22 @@ export default function IntroSequence({ onEnter }: IntroSequenceProps) {
   };
 
   return (
-    <div className="min-h-screen bg-[#0D0B08] flex items-center justify-center px-4 py-8">
-      <div className="w-full max-w-4xl bg-white/5 backdrop-blur-md border border-white/10 rounded-xl p-6 md:p-8 shadow-2xl relative overflow-hidden flex flex-col">
-        <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-[#C9A84C]/60 to-transparent" />
+    <div className="h-screen w-full flex items-center justify-center overflow-hidden px-4">
+      <div className="w-full max-w-3xl flex flex-col gap-3 rounded-2xl p-4 md:p-6 relative overflow-hidden"
+        style={{
+          maxHeight: 'calc(100vh - 48px)',
+          background: 'linear-gradient(145deg, rgba(18,30,52,0.7) 0%, rgba(10,18,36,0.78) 50%, rgba(6,10,22,0.82) 100%)',
+          backdropFilter: 'blur(20px)',
+          border: '1px solid rgba(45,72,110,0.4)',
+          boxShadow: '0 24px 80px rgba(0,0,0,0.6)',
+        }}
+      >
+        <div className="absolute top-0 left-0 w-full h-[1.5px] bg-gradient-to-r from-transparent via-[#4a7aaa]/40 to-transparent" />
+        {/* 세로 빛줄기 */}
+        <div className="absolute top-0 left-[18%] w-[1px] h-full opacity-[0.07]"
+          style={{ background: 'linear-gradient(to bottom, transparent, #5a80aa, transparent)' }} />
+        <div className="absolute top-0 right-[22%] w-[1px] h-full opacity-[0.05]"
+          style={{ background: 'linear-gradient(to bottom, transparent, #3d5a7a, transparent)' }} />
 
         {/* 비디오 플레이어 */}
         <div className="relative aspect-video w-full rounded-lg bg-black overflow-hidden shadow-2xl">
@@ -120,8 +133,9 @@ export default function IntroSequence({ onEnter }: IntroSequenceProps) {
         </div>
 
         {/* 안내 문구 */}
-        <div className="mt-6 space-y-4">
-          <div className="flex items-start gap-4 p-4 rounded-lg bg-[#C9A84C]/5 backdrop-blur-sm border border-[#C9A84C]/20 text-[#C9A84C]/90">
+        <div className="space-y-2.5">
+          <div className="flex items-start gap-4 p-4 rounded-lg backdrop-blur-sm border text-[#C9A84C]/90"
+            style={{ background: 'rgba(26,42,66,0.45)', borderColor: 'rgba(74,122,170,0.25)' }}>
             <AlertTriangle className="w-5 h-5 shrink-0 mt-0.5" />
             <div className="text-xs font-sans leading-relaxed">
               <h4 className="font-serif font-bold text-[#C9A84C] mb-1">⚠️ 심장 거래 규약</h4>
@@ -131,10 +145,10 @@ export default function IntroSequence({ onEnter }: IntroSequenceProps) {
               </p>
             </div>
           </div>
-          <div className="text-center pt-2">
+          <div className="text-center">
             <button
               onClick={onEnter}
-              className="w-full md:w-auto px-10 py-4 rounded bg-[#C9A84C] text-black hover:bg-[#d6b26d] font-bold tracking-widest text-xs uppercase shadow-lg transition-all duration-300 hover:scale-[1.01] inline-flex items-center justify-center gap-3 focus:outline-none cursor-pointer"
+              className="w-full md:w-auto px-8 py-3 rounded bg-[#C9A84C] text-black hover:bg-[#d6b26d] font-bold tracking-widest text-xs uppercase shadow-lg transition-all duration-300 hover:scale-[1.01] inline-flex items-center justify-center gap-3 focus:outline-none cursor-pointer"
             >
               <span>기묘당에 들어서다</span>
               <ArrowRight className="w-4 h-4" />

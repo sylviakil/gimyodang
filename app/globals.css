@@ -5,17 +5,42 @@
 @tailwind utilities;
 
 :root {
-  --gimyo-deep:    #0D0B08;
-  --gimyo-warm:    #1A1510;
-  --gimyo-surface: #231E18;
+  --gimyo-deep:    #0d0a1a;
+  --gimyo-warm:    #13102a;
+  --gimyo-surface: #1e1a38;
   --gimyo-paper:   #F2E8D5;
   --gimyo-gold:    #C9A84C;
+
+  /* 동굴 그라데이션 팔레트 */
+  --cave-dark:   #080612;
+  --cave-mid:    #13102a;
+  --cave-purple: #1e1540;
+  --cave-violet: #2a1f5c;
+  --cave-glow:   #3d2b6b;
+  --cave-mist:   #4a3580;
+  --mushroom:    #c084b8;
+  --lantern:     #e8c97a;
 }
 
 * { box-sizing: border-box; }
 
 body {
-  background-color: var(--gimyo-deep);
+  /* 다크 보태니컬 — 흑남색 → 딥네이비 → 슬레이트블루 */
+  background:
+    radial-gradient(ellipse 130% 55% at 50%   0%,  #1a2a42 0%, #0d1a2e 45%, transparent 75%),
+    radial-gradient(ellipse 80%  90% at 0%   85%,  #1e2e46 0%, #0a1020 65%, transparent 100%),
+    radial-gradient(ellipse 65%  70% at 100% 25%,  #243050 0%, #111828 65%, transparent 100%),
+    radial-gradient(ellipse 50%  50% at 30%  60%,  #1a2a3e 0%, #0d1525 60%, transparent 100%),
+    linear-gradient(170deg,
+      #02040a  0%,
+      #080e1a  15%,
+      #0d1628  32%,
+      #111e35  50%,
+      #0a1220  68%,
+      #060c18  85%,
+      #02040a  100%
+    );
+  background-attachment: fixed;
   color: #E5E5E5;
   font-family: 'Nanum Myeongjo', Georgia, serif;
   overflow-x: hidden;
@@ -32,10 +57,11 @@ body {
 .plum-petal {
   position: absolute;
   pointer-events: none;
-  background: radial-gradient(circle, #C9A84C 0%, #8B6914 100%);
+  background: radial-gradient(circle, #7a9fc0 0%, #3d5a7a 55%, #1a2d45 100%);
   border-radius: 90% 10% 90% 10%;
   animation: plumfall linear infinite;
   opacity: 0;
+  box-shadow: 0 0 6px #4a6a9030;
 }
 
 /* 등불 깜빡임 */
@@ -62,6 +88,19 @@ body {
 
 /* 커스텀 스크롤바 */
 ::-webkit-scrollbar { width: 4px; }
-::-webkit-scrollbar-track { background: #0D0B08; }
-::-webkit-scrollbar-thumb { background: #C9A84C; border-radius: 2px; }
-::-webkit-scrollbar-thumb:hover { background: #d6b26d; }
+::-webkit-scrollbar-track { background: #0d0a1a; }
+::-webkit-scrollbar-thumb { background: #7b5ea7; border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: #9b7ec8; }
+
+/* 동굴 표면 텍스처 — 얇은 보라 노이즈 오버레이 */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    radial-gradient(ellipse 85% 50% at 15%  8%,  #2d3f5a38 0%, #1a2a42 45%, transparent 70%),
+    radial-gradient(ellipse 65% 55% at 85% 88%,  #3d4f6a30 0%, #1e2d45 55%, transparent 85%),
+    radial-gradient(ellipse 45% 65% at 50% 48%,  #1e2d4520 0%, #0d1628 55%, transparent 80%);
+  pointer-events: none;
+  z-index: 0;
+}

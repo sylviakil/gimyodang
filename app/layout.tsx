@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
 import './globals.css';
+import { SettingsProvider } from '@/contexts/SettingsContext';
+import AdminPanel from '@/components/ui/AdminPanel';
 
 export const metadata: Metadata = {
   title: '기묘당 (奇妙堂) — 욕망을 처방하는 단과자 가게',
@@ -9,7 +11,12 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ko">
-      <body>{children}</body>
+      <body>
+        <SettingsProvider>
+          {children}
+          <AdminPanel />
+        </SettingsProvider>
+      </body>
     </html>
   );
 }

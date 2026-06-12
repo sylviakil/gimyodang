@@ -1,6 +1,6 @@
 'use client';
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useState, useEffect, Suspense } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import AtmosphereEffect from '@/components/ui/AtmosphereEffect';
 import IntroSequence from '@/components/intro/IntroSequence';
 import EraSelection from '@/components/intro/EraSelection';
@@ -11,19 +11,26 @@ import Link from 'next/link';
 
 type Stage = 'intro' | 'era' | 'ready';
 
-export default function HomePage() {
+function HomeContent() {
+
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [stage, setStage] = useState<Stage>('intro');
   const [era, setEra] = useState<EraType | null>(null);
-  const [skipIntro, setSkipIntro] = useState(false);
 
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+    // ?intro=1 이면 localStorage 초기화 후 인트로 강제 재생
+    if (searchParams.get('intro') === '1') {
+      localStorage.removeItem('gimyo_visited');
+      setStage('intro');
+      return;
+    }
     // 재방문자는 인트로 스킵
-    if (typeof window !== 'undefined' && localStorage.getItem('gimyo_visited')) {
-      setSkipIntro(true);
+    if (localStorage.getItem('gimyo_visited')) {
       setStage('era');
     }
-  }, []);
+  }, [searchParams]);
 
   const handleIntroEnter = () => {
     if (typeof window !== 'undefined') {
@@ -42,13 +49,18 @@ export default function HomePage() {
   };
 
   return (
-    <div className="relative min-h-screen bg-[#0D0B08] text-[#E5E5E5] font-serif flex flex-col overflow-hidden">
+    <div className="relative min-h-screen bg-transparent text-[#E5E5E5] font-serif flex flex-col overflow-hidden">
+
       <AtmosphereEffect />
 
       {/* 상단 네비 */}
-      <nav className="fixed top-0 left-0 right-0 z-30 flex justify-between items-center px-6 md:px-12 h-16 bg-[#0D0B08]/80 backdrop-blur-sm border-b border-white/5">
+      <nav className="fixed top-0 left-0 right-0 z-30 flex justify-between items-center px-6 md:px-12 h-16 bg-transparent">
         <button
-          onClick={() => { setStage('intro'); setEra(null); }}
+          onClick={() => {
+            if (typeof window !== 'undefined') localStorage.removeItem('gimyo_visited');
+            setStage('intro');
+            setEra(null);
+          }}
           className="flex items-center gap-3 hover:opacity-80 transition-all focus:outline-none"
         >
           <div className="w-7 h-7 bg-[#C9A84C] rotate-45 flex items-center justify-center">
@@ -129,5 +141,13 @@ export default function HomePage() {
         )}
       </main>
     </div>
+  );
+}
+
+export default function HomePage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-transparent" />}>
+      <HomeContent />
+    </Suspense>
   );
 }
