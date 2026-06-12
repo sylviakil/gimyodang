@@ -1,0 +1,6 @@
+{
+  "name": "기묘당 (奇妙堂)",
+  "description": "시대를 초월하여 손님의 욕망을 읽고 한 조각 처방을 내리는 단과자 가게 기묘당",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

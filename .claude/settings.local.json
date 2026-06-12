@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(Get-ChildItem \"C:\\\\Users\\\\sunny\\\\Desktop\\\\기묘당-\\(奇妙堂\\)\" -Recurse)",
+      "Bash(Select-Object FullName, Extension)",
+      "Skill(run)",
+      "Skill(run:*)",
+      "Skill(claude-api)",
+      "Skill(claude-api:*)",
+      "Bash(npm install *)"
+    ]
+  }
+}

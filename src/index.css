@@ -1,0 +1,65 @@
+@import url('https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Inter:wght@400;500;600&family=Space+Grotesk:wght@400;500;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-gimyodang-dark: #1e0c2b;
+  --color-gimyodang-gray: #3c1f54;
+  --color-gimyodang-plum: #812d99;
+  --color-gimyodang-grape: #18838b;
+  --color-gimyodang-rosy: #2ea7be;
+  --color-gimyodang-peach: #6be2fa;
+  
+  --font-serif: "Gowun Batang", Georgia, Cambria, "Times New Roman", Times, serif;
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+  --font-display: "Space Grotesk", sans-serif;
+}
+
+/* Elegant traditional fade animation */
+@keyframes plumfall {
+  0% {
+    transform: translateY(-10px) translateX(0) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.6;
+  }
+  90% {
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateY(100vh) translateX(100px) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+.plum-petal {
+  position: absolute;
+  pointer-events: none;
+  background: radial-gradient(circle, #6be2fa 0%, #18838b 100%);
+  border-radius: 90% 10% 90% 10%;
+  animation: plumfall linear infinite;
+  opacity: 0;
+}
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #1e0c2b;
+}
+::-webkit-scrollbar-thumb {
+  background: #812d99;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #18838b;
+}
+
+/* Traditional aesthetic styles */
+body {
+  background-color: var(--color-gimyodang-dark);
+  color: var(--color-gimyodang-peach);
+  font-family: var(--font-serif);
+  overflow-x: hidden;
+}

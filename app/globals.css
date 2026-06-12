@@ -1,0 +1,67 @@
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&family=Nanum+Gothic:wght@400;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --gimyo-deep:    #0D0B08;
+  --gimyo-warm:    #1A1510;
+  --gimyo-surface: #231E18;
+  --gimyo-paper:   #F2E8D5;
+  --gimyo-gold:    #C9A84C;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  background-color: var(--gimyo-deep);
+  color: #E5E5E5;
+  font-family: 'Nanum Myeongjo', Georgia, serif;
+  overflow-x: hidden;
+}
+
+/* 매화꽃 파티클 */
+@keyframes plumfall {
+  0%   { transform: translateY(-10px) translateX(0) rotate(0deg); opacity: 0; }
+  10%  { opacity: 0.5; }
+  90%  { opacity: 0.5; }
+  100% { transform: translateY(100vh) translateX(80px) rotate(360deg); opacity: 0; }
+}
+
+.plum-petal {
+  position: absolute;
+  pointer-events: none;
+  background: radial-gradient(circle, #C9A84C 0%, #8B6914 100%);
+  border-radius: 90% 10% 90% 10%;
+  animation: plumfall linear infinite;
+  opacity: 0;
+}
+
+/* 등불 깜빡임 */
+@keyframes candleFlicker {
+  0%, 100% { opacity: 1;    transform: scaleY(1); }
+  25%       { opacity: 0.85; transform: scaleY(0.97); }
+  50%       { opacity: 0.95; transform: scaleY(1.02); }
+  75%       { opacity: 0.8;  transform: scaleY(0.98); }
+}
+
+.candle-flame {
+  animation: candleFlicker 3s ease-in-out infinite;
+}
+
+/* 페이드인 */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+/* 커스텀 스크롤바 */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: #0D0B08; }
+::-webkit-scrollbar-thumb { background: #C9A84C; border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: #d6b26d; }

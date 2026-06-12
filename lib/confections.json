@@ -1,0 +1,174 @@
+{
+  "약과": {
+    "category": "유밀과",
+    "source": "음식디미방 1670",
+    "ingredients": [
+      { "name": "밀가루", "ohaeng": "土", "symbol": "중심·안정" },
+      { "name": "참기름", "ohaeng": "金", "symbol": "정화·순수" },
+      { "name": "꿀",    "ohaeng": "土", "symbol": "욕망의 단맛" }
+    ],
+    "steps": ["밀가루와 참기름을 섞어 반죽한다", "꿀로 조청을 만들어 튀긴 후 입힌다"],
+    "desire_tags": ["②강함", "③연결"],
+    "historical_note": "왕실 잔치와 사대부 접대에 올린 고급 과자. 귀한 재료 때문에 약처럼 여겨졌다."
+  },
+  "올란": {
+    "category": "정과",
+    "source": "규합총서 1809",
+    "ingredients": [
+      { "name": "밤",  "ohaeng": "土", "symbol": "귀환·중심" },
+      { "name": "꿀",  "ohaeng": "土", "symbol": "욕망의 단맛" },
+      { "name": "계피","ohaeng": "火", "symbol": "각성·시간" }
+    ],
+    "steps": ["밤을 쪄서 껍질을 벗기고 으깬다", "꿀과 계피를 섞어 반죽한다", "본래 밤 모양으로 다시 빚는다"],
+    "desire_tags": ["⑥회귀"],
+    "historical_note": "으깨어 다시 빚는 과정이 회귀와 재생을 상징한다."
+  },
+  "다식": {
+    "category": "숙실과",
+    "source": "규합총서 1809",
+    "ingredients": [
+      { "name": "송화가루", "ohaeng": "木", "symbol": "생명·시작" },
+      { "name": "꿀",       "ohaeng": "土", "symbol": "결속" }
+    ],
+    "steps": ["곡물·콩·약재 가루를 꿀로 반죽한다", "다식판에 찍어낸다"],
+    "desire_tags": ["⑤진실", "②강함"],
+    "historical_note": "문양에 따라 오행과 사주의 기운을 담는 처방 도구로 활용되었다."
+  },
+  "강정": {
+    "category": "유밀과",
+    "source": "음식디미방 1670",
+    "ingredients": [
+      { "name": "찹쌀", "ohaeng": "土", "symbol": "찰진 인연·결속" },
+      { "name": "조청", "ohaeng": "土", "symbol": "욕망" },
+      { "name": "생강", "ohaeng": "火", "symbol": "각성" }
+    ],
+    "steps": ["찹쌀을 막걸리로 반죽해 팔소를 넣고 기름에 지진다", "조청을 바르고 고물을 입힌다"],
+    "desire_tags": ["①지움", "④복수"],
+    "historical_note": "겉은 바삭하고 속은 쫄깃한 이중 구조가 감춰진 본질을 상징한다."
+  },
+  "인절미": {
+    "category": "떡",
+    "source": "시의전서 19세기",
+    "ingredients": [
+      { "name": "찹쌀",  "ohaeng": "土", "symbol": "결속" },
+      { "name": "콩고물","ohaeng": "水", "symbol": "지혜·어둠" }
+    ],
+    "steps": ["찹쌀을 쪄서 절구에 친다", "콩고물을 묻혀 완성한다"],
+    "desire_tags": ["③연결", "①지움"],
+    "historical_note": "치는 과정이 욕망을 단단하게 다지는 행위를 상징한다."
+  },
+  "수정과": {
+    "category": "음청류",
+    "source": "규합총서 1809",
+    "ingredients": [
+      { "name": "생강", "ohaeng": "火", "symbol": "각성·진실" },
+      { "name": "계피", "ohaeng": "火", "symbol": "시간·기억" },
+      { "name": "곶감", "ohaeng": "金", "symbol": "수렴·완성" }
+    ],
+    "steps": ["생강과 계피를 끓인다", "식힌 후 곶감을 넣고 우린다"],
+    "desire_tags": ["⑤진실", "⑥회귀"],
+    "historical_note": "차가운 음료지만 몸을 덥히는 역설이 있다."
+  },
+  "식혜": {
+    "category": "음청류",
+    "source": "음식디미방 1670",
+    "ingredients": [
+      { "name": "엿기름","ohaeng": "土", "symbol": "발효·변화" },
+      { "name": "밥",    "ohaeng": "土", "symbol": "일상·존재" }
+    ],
+    "steps": ["밥에 엿기름물을 부어 삭힌다", "밥알이 뜨면 완성"],
+    "desire_tags": ["⑦해방", "①지움"],
+    "historical_note": "삭히는 시간이 욕망을 천천히 녹이는 과정을 상징한다."
+  },
+  "전병": {
+    "category": "병과",
+    "source": "규합총서 1809",
+    "ingredients": [
+      { "name": "메밀가루","ohaeng": "水", "symbol": "어둠·지혜" },
+      { "name": "기름",    "ohaeng": "金", "symbol": "정화" }
+    ],
+    "steps": ["메밀가루를 반죽해 얇게 편다", "기름에 지져낸다"],
+    "desire_tags": ["⑦해방", "⑤진실"],
+    "historical_note": "얇고 바삭한 질감이 현실과 환상의 경계를 상징한다."
+  },
+  "꿀떡": {
+    "category": "떡",
+    "source": "기묘당의 해석",
+    "ingredients": [
+      { "name": "찹쌀","ohaeng": "土", "symbol": "결속" },
+      { "name": "꿀",  "ohaeng": "土", "symbol": "욕망의 과잉" }
+    ],
+    "steps": ["찹쌀 반죽 속에 꿀을 넣어 빚는다", "쪄서 완성한다"],
+    "desire_tags": ["③연결", "②강함"],
+    "historical_note": "너무 달면 오히려 쓰다."
+  },
+  "개성주악": {
+    "category": "병과",
+    "source": "규합총서 1809",
+    "ingredients": [
+      { "name": "찹쌀가루","ohaeng": "土", "symbol": "내면" },
+      { "name": "막걸리",  "ohaeng": "木", "symbol": "발효·변화" }
+    ],
+    "steps": ["찹쌀가루를 막걸리로 반죽한다", "팔소를 넣고 기름에 지진다", "꿀이나 조청을 바른다"],
+    "desire_tags": ["①지움", "③연결"],
+    "historical_note": "겉과 속이 다른 구조가 감춰진 상처를 상징한다."
+  },
+  "빙반": {
+    "category": "음청류",
+    "source": "음식디미방 1670",
+    "ingredients": [
+      { "name": "얼음","ohaeng": "水", "symbol": "감정의 냉각" },
+      { "name": "꿀",  "ohaeng": "土", "symbol": "단맛·위로" },
+      { "name": "팥",  "ohaeng": "火", "symbol": "분출·해소" }
+    ],
+    "steps": ["겨울에 보관한 얼음을 잘게 부순다", "꿀과 팥을 얹어 완성한다"],
+    "desire_tags": ["④복수", "①지움"],
+    "historical_note": "현대 팥빙수의 시초. 뜨거운 마음을 식히는 처방."
+  },
+  "약식": {
+    "category": "병과",
+    "source": "규합총서 1809",
+    "ingredients": [
+      { "name": "찹쌀",  "ohaeng": "土", "symbol": "결속" },
+      { "name": "대추",  "ohaeng": "木", "symbol": "생명" },
+      { "name": "밤",    "ohaeng": "土", "symbol": "귀환" },
+      { "name": "참기름","ohaeng": "金", "symbol": "정화" }
+    ],
+    "steps": ["찹쌀을 불려 쪄낸다", "대추·밤·꿀·간장·참기름을 섞어 다시 찐다"],
+    "desire_tags": ["②강함", "⑥회귀"],
+    "historical_note": "오행이 고루 담긴 균형의 처방."
+  },
+  "정과": {
+    "category": "정과",
+    "source": "음식디미방 1670",
+    "ingredients": [
+      { "name": "인삼","ohaeng": "木", "symbol": "본질·생명" },
+      { "name": "꿀",  "ohaeng": "土", "symbol": "보존" }
+    ],
+    "steps": ["재료를 꿀에 조려 만든다"],
+    "desire_tags": ["⑥회귀", "⑦해방"],
+    "historical_note": "본질을 그대로 두고 형태만 변화시키는 지혜를 상징한다."
+  },
+  "엿": {
+    "category": "당과류",
+    "source": "시의전서 19세기",
+    "ingredients": [
+      { "name": "조청",  "ohaeng": "土", "symbol": "욕망의 끈기" },
+      { "name": "엿기름","ohaeng": "土", "symbol": "변화" }
+    ],
+    "steps": ["곡물을 당화시켜 조청을 만든다", "끓이고 늘여 완성한다"],
+    "desire_tags": ["③연결", "④복수"],
+    "historical_note": "끊어지지 않는 성질이 집착과 연결을 상징한다."
+  },
+  "조란": {
+    "category": "정과",
+    "source": "규합총서 1809",
+    "ingredients": [
+      { "name": "대추","ohaeng": "木", "symbol": "새 시작" },
+      { "name": "꿀",  "ohaeng": "土", "symbol": "보존" }
+    ],
+    "steps": ["대추를 쪄서 씨를 빼고 으깬다", "꿀로 반죽해 본래 모양으로 빚는다"],
+    "desire_tags": ["⑥회귀", "①지움"],
+    "historical_note": "과거를 녹여 새로 출발하는 것을 상징한다."
+  }
+}
