@@ -32,6 +32,17 @@ function HomeContent() {
     }
   }, [searchParams]);
 
+  // 인트로 stage에서 html 스크롤 완전 차단
+  useEffect(() => {
+    if (typeof document === 'undefined') return;
+    if (stage === 'intro') {
+      document.documentElement.classList.add('no-scroll');
+    } else {
+      document.documentElement.classList.remove('no-scroll');
+    }
+    return () => { document.documentElement.classList.remove('no-scroll'); };
+  }, [stage]);
+
   const handleIntroEnter = () => {
     if (typeof window !== 'undefined') {
       localStorage.setItem('gimyo_visited', '1');
@@ -49,7 +60,7 @@ function HomeContent() {
   };
 
   return (
-    <div className="relative min-h-screen bg-transparent text-[#E5E5E5] font-serif flex flex-col overflow-hidden">
+    <div className={`relative bg-transparent text-[#E5E5E5] font-serif flex flex-col ${stage === 'intro' ? 'h-screen max-h-screen overflow-hidden' : 'min-h-screen'}`}>
 
       <AtmosphereEffect />
 
@@ -70,6 +81,16 @@ function HomeContent() {
             Gimyodang <span className="text-xs text-[#C9A84C] font-light not-italic">奇妙堂</span>
           </span>
         </button>
+
+        {/* 현재 페이지명 */}
+        <div className="absolute left-1/2 -translate-x-1/2 flex flex-col items-center pointer-events-none">
+          <span className="text-[9px] uppercase tracking-[0.4em] font-sans text-white/20">
+            {stage === 'intro' ? 'intro' : stage === 'era' ? 'door' : 'enter'}
+          </span>
+          <span className="text-xs font-serif text-white/55 mt-0.5">
+            {stage === 'intro' ? '문 앞' : stage === 'era' ? '길목' : '기묘당 문'}
+          </span>
+        </div>
 
         <div className="flex items-center gap-4">
           <Link href="/gallery" className="flex items-center gap-1.5 text-[10px] uppercase tracking-[0.25em] text-white/40 hover:text-[#C9A84C] transition-colors font-sans">

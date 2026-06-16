@@ -22,7 +22,12 @@
   --lantern:     #e8c97a;
 }
 
-* { box-sizing: border-box; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  height: 100%;
+  max-height: 100%;
+}
 
 body {
   /* 다크 보태니컬 — 흑남색 → 딥네이비 → 슬레이트블루 */
@@ -44,6 +49,7 @@ body {
   color: #E5E5E5;
   font-family: 'Nanum Myeongjo', Georgia, serif;
   overflow-x: hidden;
+  scrollbar-gutter: stable;
 }
 
 /* 매화꽃 파티클 */
@@ -91,6 +97,16 @@ body {
 ::-webkit-scrollbar-track { background: #0d0a1a; }
 ::-webkit-scrollbar-thumb { background: #7b5ea7; border-radius: 2px; }
 ::-webkit-scrollbar-thumb:hover { background: #9b7ec8; }
+
+/* 인트로 페이지 — 스크롤바 완전 제거 */
+.no-scroll {
+  overflow: hidden !important;
+  height: 100dvh !important;
+}
+html.no-scroll, html.no-scroll body {
+  overflow: hidden !important;
+  height: 100dvh !important;
+}
 
 /* 동굴 표면 텍스처 — 얇은 보라 노이즈 오버레이 */
 body::before {

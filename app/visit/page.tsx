@@ -389,6 +389,17 @@ function VisitContent() {
           </div>
           <span className="text-base font-serif italic tracking-tight text-white">Gimyodang <span className="text-xs text-[#C9A84C] font-light not-italic">奇妙堂</span></span>
         </Link>
+
+        {/* 현재 페이지명 */}
+        <div className="absolute left-1/2 -translate-x-1/2 flex flex-col items-center pointer-events-none">
+          <span className="text-[9px] uppercase tracking-[0.4em] font-sans text-white/20">
+            {step === 'persona' ? 'guest' : step === 'desire' ? 'desire' : prescription ? 'recipe' : 'dialog'}
+          </span>
+          <span className="text-xs font-serif text-white/55 mt-0.5">
+            {step === 'persona' ? '손님 수결' : step === 'desire' ? '욕망 고백' : prescription ? '처방' : '조제 대화'}
+          </span>
+        </div>
+
         <div className="flex items-center gap-4 text-[10px] uppercase tracking-[0.2em] font-sans">
           <Link href="/gallery" className="text-white/40 hover:text-[#C9A84C] transition-colors flex items-center gap-1">
             <Archive className="w-3.5 h-3.5" /><span>갤러리</span>

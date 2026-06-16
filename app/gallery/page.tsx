@@ -64,6 +64,13 @@ export default function GalleryPage() {
           </div>
           <span className="text-base font-serif italic tracking-tight text-white">Gimyodang <span className="text-xs text-[#C9A84C] font-light not-italic">奇妙堂</span></span>
         </Link>
+
+        {/* 현재 페이지명 */}
+        <div className="absolute left-1/2 -translate-x-1/2 flex flex-col items-center pointer-events-none">
+          <span className="text-[9px] uppercase tracking-[0.4em] font-sans text-white/20">gallery</span>
+          <span className="text-xs font-serif text-white/55 mt-0.5">기록 보관소</span>
+        </div>
+
         <div className="flex items-center gap-4 text-[10px] uppercase tracking-[0.2em] font-sans">
           <Link href="/visit" className="text-white/40 hover:text-[#C9A84C] transition-colors">손님 모드</Link>
           <Link href="/create" className="text-white/40 hover:text-[#C9A84C] transition-colors flex items-center gap-1">
