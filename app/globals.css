@@ -108,6 +108,30 @@ html.no-scroll, html.no-scroll body {
   height: 100dvh !important;
 }
 
+/* ─── 관리자 패널 폰트/색상 설정 전역 적용 ───────────────────
+   font-serif 클래스 = "본문" 구역, font-sans 클래스 = "UI" 구역으로 매핑.
+   강조색(금색/적색)이나 버튼 위 검정 글자처럼 의도적으로 색이 고정된
+   요소는 건드리지 않도록, 무채색(white/zinc) 텍스트에만 색을 덮어씌운다. */
+h1, h2, h3 {
+  font-family: var(--font-heading) !important;
+}
+
+[class*="font-serif"]:not(h1):not(h2):not(h3) {
+  font-family: var(--font-body) !important;
+}
+[class*="font-serif"][class*="text-white"],
+[class*="font-serif"][class*="text-zinc"] {
+  color: var(--color-body) !important;
+}
+
+[class*="font-sans"] {
+  font-family: var(--font-ui) !important;
+}
+[class*="font-sans"][class*="text-white"],
+[class*="font-sans"][class*="text-zinc"] {
+  color: var(--color-ui) !important;
+}
+
 /* 동굴 표면 텍스처 — 얇은 보라 노이즈 오버레이 */
 body::before {
   content: '';
