@@ -3,9 +3,9 @@ import { useState, useCallback, useRef, useEffect } from 'react';
 import { Settings, X, RotateCcw, Trash2 } from 'lucide-react';
 import {
   useSettings,
-  GradientStop, CustomGradient, FontFamily, FontSize, PageKey,
-  FONT_FAMILY_OPTIONS, FONT_SIZE_OPTIONS,
-  FONT_FAMILY_MAP, FONT_SIZE_MAP,
+  GradientStop, CustomGradient, FontFamily, PageKey,
+  FONT_FAMILY_OPTIONS, FONT_FAMILY_MAP,
+  FONT_SIZE_MIN, FONT_SIZE_MAX,
   buildCssGradient, DEFAULTS, PAGE_KEYS, PAGE_LABELS,
 } from '@/contexts/SettingsContext';
 
@@ -297,7 +297,7 @@ function FontZoneEditor({
   accentColor: string;
   showGradientToggle?: boolean;
   zone: {
-    family: FontFamily; size: FontSize; color?: string;
+    family: FontFamily; size: number; color?: string;
     colorStart?: string; colorEnd?: string; useGradient?: boolean;
   };
   onChange: (patch: Partial<typeof zone>) => void;
@@ -343,22 +343,16 @@ function FontZoneEditor({
       </div>
 
       {/* 폰트 크기 */}
-      <div className="flex items-center gap-1.5">
+      <div className="flex items-center gap-2">
         <span className="text-[8px] text-white/25 font-sans shrink-0">크기</span>
-        <div className="flex gap-1">
-          {FONT_SIZE_OPTIONS.map((opt) => (
-            <button key={opt.value}
-              onClick={() => onChange({ size: opt.value })}
-              className="w-7 h-5 rounded text-[8px] font-mono cursor-pointer transition-all"
-              style={{
-                background: zone.size === opt.value ? `${accentColor}20` : 'rgba(255,255,255,0.04)',
-                border: `1px solid ${zone.size === opt.value ? accentColor + '60' : 'rgba(255,255,255,0.08)'}`,
-                color: zone.size === opt.value ? accentColor : 'rgba(255,255,255,0.3)',
-              }}>
-              {opt.label}
-            </button>
-          ))}
-        </div>
+        <input type="range" min={FONT_SIZE_MIN} max={FONT_SIZE_MAX} step={1}
+          value={zone.size}
+          onChange={(e) => onChange({ size: Number(e.target.value) })}
+          className="flex-1 h-[3px] rounded-full appearance-none cursor-pointer"
+          style={{ accentColor }} />
+        <span className="text-[9px] font-mono w-9 text-right shrink-0" style={{ color: accentColor }}>
+          {zone.size}px
+        </span>
       </div>
 
       {/* 색상 */}
@@ -567,6 +561,7 @@ export default function AdminPanel() {
               <FontZoneEditor
                 label={`본문 — ${PAGE_LABELS[editingPage]}의 대화·서사 텍스트`}
                 accentColor={accent}
+                showGradientToggle
                 zone={editingFonts.body}
                 onChange={(patch) => updatePageFont(editingPage, 'body', patch)}
               />

@@ -119,9 +119,17 @@ h1, h2, h3 {
 [class*="font-serif"]:not(h1):not(h2):not(h3) {
   font-family: var(--font-body) !important;
 }
-[class*="font-serif"][class*="text-white"],
-[class*="font-serif"][class*="text-zinc"] {
+:root:not([data-body-gradient="true"]) [class*="font-serif"][class*="text-white"],
+:root:not([data-body-gradient="true"]) [class*="font-serif"][class*="text-zinc"] {
   color: var(--color-body) !important;
+}
+[data-body-gradient="true"] [class*="font-serif"][class*="text-white"],
+[data-body-gradient="true"] [class*="font-serif"][class*="text-zinc"] {
+  background: linear-gradient(90deg, var(--color-body-from), var(--color-body-to)) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+  color: transparent !important;
 }
 
 [class*="font-sans"] {

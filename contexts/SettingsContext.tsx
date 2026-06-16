@@ -3,7 +3,12 @@ import { createContext, useContext, useState, useEffect, ReactNode } from 'react
 
 // ── 타입 ─────────────────────────────────────────────────
 export type FontFamily = 'myeongjo' | 'gothic' | 'garamond' | 'mono';
-export type FontSize   = 'sm' | 'md' | 'lg' | 'xl';
+/** 글자 크기는 8~30px 사이 1px 단위 슬라이더로 직접 지정 */
+export const FONT_SIZE_MIN = 8;
+export const FONT_SIZE_MAX = 30;
+export function clampFontSize(n: number): number {
+  return Math.min(FONT_SIZE_MAX, Math.max(FONT_SIZE_MIN, Math.round(n)));
+}
 
 export interface GradientStop {
   id: string;
@@ -17,18 +22,18 @@ export interface CustomGradient {
   stops: GradientStop[];
 }
 
-/** 폰트 영역 3종 */
+/** 폰트 영역 — UI는 단색만 지원 */
 export interface FontConfig {
   family: FontFamily;
-  size: FontSize;
-  color: string;          // 본문·UI는 단색
+  size: number;            // px, 8~30
+  color: string;
 }
 
-/** 헤딩은 그라데이션 텍스트 지원 */
+/** 헤딩·본문은 그라데이션 텍스트 지원 (시작색 → 끝색, 토글로 해제 가능) */
 export interface HeadingConfig {
   family: FontFamily;
-  size: FontSize;
-  colorStart: string;
+  size: number;             // px, 8~30
+  colorStart: string;       // 그라데이션 해제 시 단색으로 사용됨
   colorEnd: string;
   useGradient: boolean;
 }
@@ -54,7 +59,7 @@ export const PAGE_LABELS: Record<PageKey, string> = {
 /** 페이지 1개가 갖는 폰트 3영역 묶음 */
 export interface PageFontSet {
   heading: HeadingConfig;   // h1~h3, 연화 발화, 타이틀
-  body: FontConfig;         // 일반 본문 텍스트
+  body: HeadingConfig;      // 일반 본문 텍스트 — 그라데이션 토글 지원
   ui: FontConfig;           // 버튼, 라벨, 네비, 뱃지
 }
 
@@ -78,19 +83,21 @@ export interface SiteSettings {
 const DEFAULT_PAGE_FONT_SET: PageFontSet = {
   heading: {
     family: 'myeongjo',
-    size: 'xl',
+    size: 18,
     colorStart: '#C9A84C',
     colorEnd: '#e8c97a',
     useGradient: true,
   },
   body: {
     family: 'myeongjo',
-    size: 'md',
-    color: '#E0D8CC',
+    size: 14,
+    colorStart: '#E0D8CC',
+    colorEnd: '#C9A84C',
+    useGradient: false,
   },
   ui: {
     family: 'gothic',
-    size: 'sm',
+    size: 12,
     color: '#A0A8B0',
   },
 };
@@ -135,25 +142,11 @@ export const FONT_FAMILY_MAP: Record<FontFamily, string> = {
   mono:     "'Courier New', Courier, monospace",
 };
 
-export const FONT_SIZE_MAP: Record<FontSize, string> = {
-  sm: '12px',
-  md: '14px',
-  lg: '16px',
-  xl: '18px',
-};
-
 export const FONT_FAMILY_OPTIONS: { value: FontFamily; label: string }[] = [
   { value: 'myeongjo', label: '나눔명조' },
   { value: 'gothic',   label: '나눔고딕' },
   { value: 'garamond', label: '개러몬드' },
   { value: 'mono',     label: '모노' },
-];
-
-export const FONT_SIZE_OPTIONS: { value: FontSize; label: string }[] = [
-  { value: 'sm', label: '12' },
-  { value: 'md', label: '14' },
-  { value: 'lg', label: '16' },
-  { value: 'xl', label: '18' },
 ];
 
 // ── 그라데이션 CSS 생성 ──────────────────────────────────
@@ -168,7 +161,7 @@ export function buildCssGradient(g: CustomGradient): string {
 /** 헤딩 텍스트 그라데이션 CSS (인라인 style 적용용) */
 export function buildHeadingStyle(h: HeadingConfig): React.CSSProperties {
   if (!h.useGradient) {
-    return { color: h.colorStart, fontFamily: FONT_FAMILY_MAP[h.family], fontSize: FONT_SIZE_MAP[h.size] };
+    return { color: h.colorStart, fontFamily: FONT_FAMILY_MAP[h.family], fontSize: `${h.size}px` };
   }
   return {
     background: `linear-gradient(90deg, ${h.colorStart}, ${h.colorEnd})`,
@@ -176,7 +169,7 @@ export function buildHeadingStyle(h: HeadingConfig): React.CSSProperties {
     WebkitTextFillColor: 'transparent',
     backgroundClip: 'text',
     fontFamily: FONT_FAMILY_MAP[h.family],
-    fontSize: FONT_SIZE_MAP[h.size],
+    fontSize: `${h.size}px`,
   };
 }
 
@@ -208,11 +201,23 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
       const saved = localStorage.getItem('gimyo_settings_v3');
       if (saved) {
         const parsed = JSON.parse(saved);
+        // 구버전 저장값 호환: 영역(heading/body/ui) 단위로 깊이 병합
+        // (예전 body는 {family,size,color} 형태 — colorStart/colorEnd/useGradient가 없어
+        //  통째로 덮어쓰면 그라데이션 관련 필드가 undefined가 되어 런타임 오류가 난다)
+        const mergedPageFonts = {} as Record<PageKey, PageFontSet>;
+        for (const key of PAGE_KEYS) {
+          const def = DEFAULTS.pageFonts[key];
+          const sav = parsed.pageFonts?.[key] ?? {};
+          mergedPageFonts[key] = {
+            heading: { ...def.heading, ...sav.heading },
+            body:    { ...def.body,    ...sav.body },
+            ui:      { ...def.ui,      ...sav.ui },
+          };
+        }
         setSettings({
           ...DEFAULTS,
           ...parsed,
-          // 구버전 저장값 호환: pageFonts가 없으면 기본값으로 채움
-          pageFonts: { ...DEFAULTS.pageFonts, ...(parsed.pageFonts ?? {}) },
+          pageFonts: mergedPageFonts,
         });
       }
     } catch {}
@@ -232,20 +237,23 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
 
     // 본문 폰트 → body (현재 페이지 기준)
     document.body.style.fontFamily = FONT_FAMILY_MAP[activeFonts.body.family];
-    document.body.style.fontSize   = FONT_SIZE_MAP[activeFonts.body.size];
-    document.body.style.color      = activeFonts.body.color;
+    document.body.style.fontSize   = `${activeFonts.body.size}px`;
+    document.body.style.color      = activeFonts.body.colorStart;
 
     // CSS 변수로 폰트 3영역 전달 (현재 페이지 기준 — 페이지 이동 시 자동 전환)
     root.style.setProperty('--font-heading',       FONT_FAMILY_MAP[activeFonts.heading.family]);
-    root.style.setProperty('--font-size-heading',  FONT_SIZE_MAP[activeFonts.heading.size]);
+    root.style.setProperty('--font-size-heading',  `${activeFonts.heading.size}px`);
     root.style.setProperty('--font-body',          FONT_FAMILY_MAP[activeFonts.body.family]);
-    root.style.setProperty('--font-size-body',     FONT_SIZE_MAP[activeFonts.body.size]);
+    root.style.setProperty('--font-size-body',     `${activeFonts.body.size}px`);
     root.style.setProperty('--font-ui',            FONT_FAMILY_MAP[activeFonts.ui.family]);
-    root.style.setProperty('--font-size-ui',       FONT_SIZE_MAP[activeFonts.ui.size]);
-    root.style.setProperty('--color-body',         activeFonts.body.color);
+    root.style.setProperty('--font-size-ui',       `${activeFonts.ui.size}px`);
+    root.style.setProperty('--color-body',         activeFonts.body.colorStart);
+    root.style.setProperty('--color-body-from',    activeFonts.body.colorStart);
+    root.style.setProperty('--color-body-to',      activeFonts.body.colorEnd);
     root.style.setProperty('--color-ui',           activeFonts.ui.color);
     root.style.setProperty('--color-heading-from', activeFonts.heading.colorStart);
     root.style.setProperty('--color-heading-to',   activeFonts.heading.colorEnd);
+    root.setAttribute('data-body-gradient', String(activeFonts.body.useGradient));
 
     // 배경
     document.body.style.background           = buildCssGradient(settings.gradient);
