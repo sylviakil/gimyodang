@@ -4,6 +4,7 @@ import { createClient } from '@supabase/supabase-js';
 import { Story } from '@/types';
 import { generateCardConfig } from '@/lib/cardVisual';
 import { ArrowLeft, Archive, Heart, Clock } from 'lucide-react';
+import PageKeySync from '@/components/ui/PageKeySync';
 
 async function getStory(id: string): Promise<Story | null> {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -41,6 +42,7 @@ export default async function StoryDetailPage({ params }: { params: { id: string
 
   return (
     <div className="relative min-h-screen bg-transparent text-[#E5E5E5] font-serif">
+      <PageKeySync page="story" />
       {/* 배경 */}
       <div className="fixed inset-0 z-0 pointer-events-none">
         <div className="absolute inset-0" style={{ background: `radial-gradient(ellipse at 30% 40%, ${cfg.bgColor}30 0%, transparent 60%)` }} />
@@ -95,7 +97,7 @@ export default async function StoryDetailPage({ params }: { params: { id: string
                 결말: {TONE_LABEL[story.ending_tone ?? ''] ?? story.ending_tone}
               </span>
             </div>
-            <h1 className="text-2xl font-serif text-white">{story.confection_name}</h1>
+            <h1 className="text-2xl" style={{ fontFamily: 'var(--font-heading)', background: 'linear-gradient(90deg, var(--color-heading-from), var(--color-heading-to))', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>{story.confection_name}</h1>
             <p className="text-xs text-white/50 font-sans">
               원형: <span className="text-[#C9A84C]">{story.confection_original}</span>
             </p>

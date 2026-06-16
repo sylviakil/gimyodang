@@ -15,6 +15,7 @@ import Typewriter from '@/components/ui/Typewriter';
 import { EraType, DesireCard, ChatMessage, Prescription, Flashback, PersonaState } from '@/types';
 import { supabase } from '@/lib/supabase';
 import { generateCardConfig } from '@/lib/cardVisual';
+import { useSettings } from '@/contexts/SettingsContext';
 
 // ─── 페르소나 선택 미니 폼 ─────────────────────────────
 import { JOSEON_PERSONAS, MODERN_PERSONAS } from '@/data/personas';
@@ -26,8 +27,12 @@ function PersonaForm({ era, onDone }: { era: EraType; onDone: (p: PersonaState) 
   const [job, setJob] = useState('');
   const cats = era === 'joseon' ? JOSEON_PERSONAS : MODERN_PERSONAS;
 
+  const AGE_LABELS: Record<PersonaState['ageGroup'], string> = {
+    youth: '10대', adult: '20-30대', middle: '40-50대', elder: '60대+',
+  };
+
   return (
-    <div className="max-w-lg mx-auto space-y-5 animate-fade-in">
+    <div className="w-[80%] mx-auto space-y-5 animate-fade-in min-w-[320px]">
       <div className="text-center space-y-1">
         <p className="text-[10px] uppercase tracking-[0.4em] text-[#C9A84C] font-sans font-bold">[ 제 3 장 ] 손님 수결</p>
         <p className="text-xs text-white/50 font-sans">연화에게 나아갈 당신의 정체를 각인하십시오.</p>
@@ -44,33 +49,54 @@ function PersonaForm({ era, onDone }: { era: EraType; onDone: (p: PersonaState) 
       </div>
 
       <div className="grid grid-cols-2 gap-3">
-        {(['yin', 'yang'] as const).map((g) => (
-          <button key={g} onClick={() => setGender(g)}
-            className={`py-2 rounded-lg border text-xs font-sans cursor-pointer transition-all ${gender === g ? 'border-[#C9A84C] text-[#C9A84C] bg-[#C9A84C]/10' : 'border-white/10 text-white/50'}`}>
-            {g === 'yin' ? '여성 (陰)' : '남성 (陽)'}
-          </button>
-        ))}
-      </div>
+        <div className="space-y-1.5">
+          <label className="text-[9px] uppercase tracking-wider text-[#C9A84C] font-sans">성별</label>
+          <select
+            value={gender}
+            onChange={(e) => setGender(e.target.value as 'yin' | 'yang')}
+            className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-[#C9A84C] font-sans cursor-pointer appearance-none"
+            style={{
+              backgroundImage: "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%23C9A84C'><path d='M5.5 7.5l4.5 5 4.5-5z'/></svg>\")",
+              backgroundRepeat: 'no-repeat',
+              backgroundPosition: 'right 0.75rem center',
+              backgroundSize: '1em',
+            }}
+          >
+            <option value="yin" className="bg-[#15110a] text-white">여성 (陰)</option>
+            <option value="yang" className="bg-[#15110a] text-white">남성 (陽)</option>
+          </select>
+        </div>
 
-      <div className="grid grid-cols-4 gap-2">
-        {(['youth', 'adult', 'middle', 'elder'] as const).map((ag) => (
-          <button key={ag} onClick={() => setAgeGroup(ag)}
-            className={`py-1.5 rounded-lg border text-[9px] font-sans cursor-pointer transition-all ${ageGroup === ag ? 'border-[#C9A84C] text-[#C9A84C] bg-[#C9A84C]/10' : 'border-white/10 text-white/50'}`}>
-            {ag === 'youth' ? '10대' : ag === 'adult' ? '20-30대' : ag === 'middle' ? '40-50대' : '60대+'}
-          </button>
-        ))}
+        <div className="space-y-1.5">
+          <label className="text-[9px] uppercase tracking-wider text-[#C9A84C] font-sans">나이대</label>
+          <select
+            value={ageGroup}
+            onChange={(e) => setAgeGroup(e.target.value as PersonaState['ageGroup'])}
+            className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-[#C9A84C] font-sans cursor-pointer appearance-none"
+            style={{
+              backgroundImage: "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%23C9A84C'><path d='M5.5 7.5l4.5 5 4.5-5z'/></svg>\")",
+              backgroundRepeat: 'no-repeat',
+              backgroundPosition: 'right 0.75rem center',
+              backgroundSize: '1em',
+            }}
+          >
+            {(['youth', 'adult', 'middle', 'elder'] as const).map((ag) => (
+              <option key={ag} value={ag} className="bg-[#15110a] text-white">{AGE_LABELS[ag]}</option>
+            ))}
+          </select>
+        </div>
       </div>
 
       <div className="space-y-1.5">
         <label className="text-[9px] uppercase tracking-wider text-[#C9A84C] font-sans">신분 / 직군 선택</label>
-        <div className="max-h-40 overflow-y-auto space-y-1 pr-1">
+        <div className="max-h-72 overflow-y-auto space-y-3 pr-1">
           {cats.map((cat) => (
             <div key={cat.id}>
               <p className="text-[8px] text-white/20 uppercase font-sans mb-1">{cat.label}</p>
-              <div className="grid grid-cols-2 gap-1">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-1.5">
                 {cat.items.map((item) => (
                   <button key={item.id} onClick={() => setJob(item.label)}
-                    className={`text-left px-2 py-1 rounded border text-[9px] font-sans cursor-pointer transition-all ${job === item.label ? 'border-[#C9A84C] text-[#C9A84C]' : 'border-white/10 text-white/40 hover:border-white/20'}`}>
+                    className={`text-left px-2.5 py-1.5 rounded border text-[10px] font-sans cursor-pointer transition-all ${job === item.label ? 'border-[#C9A84C] text-[#C9A84C]' : 'border-white/10 text-white/40 hover:border-white/20'}`}>
                     {item.label}
                   </button>
                 ))}
@@ -119,6 +145,12 @@ function VisitContent() {
   const [saveStatus, setSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'failed'>('idle');
   const [user, setUser] = useState<{ id: string; email: string } | null>(null);
   const chatEndRef = useRef<HTMLDivElement>(null);
+  const { setActivePage } = useSettings();
+
+  // 관리자 패널이 현재 보고 있는 단계의 폰트/색상을 편집하도록 동기화
+  useEffect(() => {
+    setActivePage(step === 'persona' ? 'guest' : step === 'desire' ? 'desire' : prescription ? 'recipe' : 'dialog');
+  }, [step, prescription, setActivePage]);
 
   const themeStyles = era === 'joseon' ? {
     box:          'bg-[#15110a]/50 backdrop-blur-md border-2 border-[#C9A84C]/50',
@@ -395,7 +427,7 @@ function VisitContent() {
           <span className="text-[9px] uppercase tracking-[0.4em] font-sans text-white/20">
             {step === 'persona' ? 'guest' : step === 'desire' ? 'desire' : prescription ? 'recipe' : 'dialog'}
           </span>
-          <span className="text-xs font-serif text-white/55 mt-0.5">
+          <span className="text-xs mt-0.5" style={{ fontFamily: 'var(--font-ui)', color: 'var(--color-ui)' }}>
             {step === 'persona' ? '손님 수결' : step === 'desire' ? '욕망 고백' : prescription ? '처방' : '조제 대화'}
           </span>
         </div>

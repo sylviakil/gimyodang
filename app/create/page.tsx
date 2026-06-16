@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import AtmosphereEffect from '@/components/ui/AtmosphereEffect';
@@ -11,6 +11,7 @@ import Step4Publish from '@/components/create/Step4Publish';
 import { generateCardConfig } from '@/lib/cardVisual';
 import { EraType } from '@/types';
 import { Archive } from 'lucide-react';
+import { useSettings } from '@/contexts/SettingsContext';
 
 import { PersonaState, Prescription } from '@/types';
 
@@ -24,6 +25,9 @@ const INITIAL_PRESCRIPTION: Partial<Prescription> = {
 
 export default function CreatePage() {
   const router = useRouter();
+  const { setActivePage } = useSettings();
+  useEffect(() => { setActivePage('create'); }, [setActivePage]);
+
   const [step, setStep] = useState(1);
   const [era, setEra] = useState<EraType>('joseon');
   const [persona, setPersona] = useState<PersonaState>(INITIAL_PERSONA);
@@ -96,7 +100,7 @@ export default function CreatePage() {
           {/* 헤더 */}
           <div className="text-center mb-8 space-y-2">
             <p className="text-[9px] uppercase tracking-[0.5em] text-[#C9A84C] font-sans font-bold">이야기 창작 모드</p>
-            <h1 className="text-2xl font-serif text-white">그대 손님의 이야기를<br /><span className="text-[#C9A84C]">기묘당 궤짝에 봉인하시오</span></h1>
+            <h1 className="text-2xl text-white" style={{ fontFamily: 'var(--font-heading)' }}>그대 손님의 이야기를<br /><span style={{ color: 'var(--color-heading-from)' }}>기묘당 궤짝에 봉인하시오</span></h1>
           </div>
 
           <StepIndicator currentStep={step} totalSteps={4} />

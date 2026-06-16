@@ -3,12 +3,12 @@ import { EraType } from '@/types';
 export type TurnType = 'turn1' | 'turn2' | 'turn3' | 'turn4' | 'turn5' | 'ending';
 
 const MAX_TOKENS: Record<TurnType, number> = {
-  turn1:   150,
-  turn2:   250,
-  turn3:   120,
-  turn4:   450,
-  turn5:   200,
-  ending:  300,
+  turn1:   400,
+  turn2:   500,
+  turn3:   400,
+  turn4:   700,
+  turn5:   450,
+  ending:  550,
 };
 
 // 시스템 프롬프트 핵심
@@ -177,6 +177,7 @@ export async function callYeonhwa(
       temperature: 0.85,
       maxOutputTokens: MAX_TOKENS[turn],
       responseMimeType: 'application/json',
+      thinkingConfig: { thinkingBudget: 0 },
     },
   };
 

@@ -8,6 +8,7 @@ import CandleFlicker from '@/components/ui/CandleFlicker';
 import { EraType } from '@/types';
 import { Archive, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
+import { useSettings } from '@/contexts/SettingsContext';
 
 type Stage = 'intro' | 'era' | 'ready';
 
@@ -17,6 +18,12 @@ function HomeContent() {
   const searchParams = useSearchParams();
   const [stage, setStage] = useState<Stage>('intro');
   const [era, setEra] = useState<EraType | null>(null);
+  const { setActivePage } = useSettings();
+
+  // 관리자 패널이 현재 보고 있는 단계의 폰트/색상을 편집하도록 동기화
+  useEffect(() => {
+    setActivePage(stage === 'intro' ? 'intro' : stage === 'era' ? 'door' : 'enter');
+  }, [stage, setActivePage]);
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -87,7 +94,7 @@ function HomeContent() {
           <span className="text-[9px] uppercase tracking-[0.4em] font-sans text-white/20">
             {stage === 'intro' ? 'intro' : stage === 'era' ? 'door' : 'enter'}
           </span>
-          <span className="text-xs font-serif text-white/55 mt-0.5">
+          <span className="text-xs mt-0.5" style={{ fontFamily: 'var(--font-ui)', color: 'var(--color-ui)' }}>
             {stage === 'intro' ? '문 앞' : stage === 'era' ? '길목' : '기묘당 문'}
           </span>
         </div>
@@ -130,9 +137,9 @@ function HomeContent() {
                 <p className="text-[10px] uppercase tracking-[0.5em] text-[#C9A84C] font-sans font-bold">
                   {era === 'joseon' ? '조선 한양 자시' : '현대 서울 강남 뒷골목'}
                 </p>
-                <h1 className="text-3xl font-serif text-white leading-tight">
+                <h1 className="text-3xl text-white leading-tight" style={{ fontFamily: 'var(--font-heading)' }}>
                   기묘당의 문이<br />
-                  <span className="text-[#C9A84C]">열려 있습니다</span>
+                  <span style={{ color: 'var(--color-heading-from)' }}>열려 있습니다</span>
                 </h1>
                 <p className="text-sm text-white/50 font-sans leading-relaxed">
                   {era === 'joseon'

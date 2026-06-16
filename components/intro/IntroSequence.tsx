@@ -148,7 +148,11 @@ export default function IntroSequence({ onEnter }: IntroSequenceProps) {
           <div className="text-center">
             <button
               onClick={onEnter}
-              className="w-full md:w-auto px-8 py-3 rounded bg-[#C9A84C] text-black hover:bg-[#d6b26d] font-bold tracking-widest text-xs uppercase shadow-lg transition-all duration-300 hover:scale-[1.01] inline-flex items-center justify-center gap-3 focus:outline-none cursor-pointer"
+              className="w-full md:w-auto px-8 py-3 rounded text-black font-bold tracking-widest text-xs uppercase shadow-lg transition-all duration-300 hover:scale-[1.01] hover:brightness-110 inline-flex items-center justify-center gap-3 focus:outline-none cursor-pointer"
+              style={{
+                background: 'var(--enter-btn-color, #C9A84C)',
+                opacity: 'var(--enter-btn-opacity, 1)',
+              }}
             >
               <span>기묘당에 들어서다</span>
               <ArrowRight className="w-4 h-4" />

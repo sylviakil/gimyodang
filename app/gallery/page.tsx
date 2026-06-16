@@ -6,8 +6,12 @@ import StoryCard from '@/components/gallery/StoryCard';
 import GalleryFilter from '@/components/gallery/GalleryFilter';
 import { Story } from '@/types';
 import { Archive, PenLine, Loader2, AlertCircle, RefreshCw } from 'lucide-react';
+import { useSettings } from '@/contexts/SettingsContext';
 
 export default function GalleryPage() {
+  const { setActivePage } = useSettings();
+  useEffect(() => { setActivePage('gallery'); }, [setActivePage]);
+
   const [stories, setStories] = useState<Story[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -87,7 +91,7 @@ export default function GalleryPage() {
               <Archive className="w-3 h-3" />
               <span>궤짝 갤러리</span>
             </div>
-            <h1 className="text-2xl font-serif text-white">기묘당 손님들의 이야기</h1>
+            <h1 className="text-2xl" style={{ fontFamily: 'var(--font-heading)', background: 'linear-gradient(90deg, var(--color-heading-from), var(--color-heading-to))', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>기묘당 손님들의 이야기</h1>
             <p className="text-xs text-white/40 font-sans">욕망의 처방전. 대가 없는 이야기는 없습니다.</p>
           </div>
 
